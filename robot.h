@@ -17,11 +17,12 @@ class Robot {
         int step_size;
         Location target;
         Location location;
+        float max_accepted_err;
 
     public:
         GPS gps;
 
-        Robot(Location &, int stop_size = 1);
+        Robot(Location &, int stop_size = 1, float max_err = 10.);
 
         command_t generate_command(void);
         void execute_command(command_t);

@@ -9,14 +9,13 @@ using namespace std;
 
 typedef queue<Location> location_set_t;
 
-#define MINIMUM_ACCEPTANCE 3.
-
 class Simulator {
     private:
         Robot *robot;
         location_set_t targets;
+        int max_step_to_target;
 
     public:
-        Simulator(Robot &, location_set_t &);
+        Simulator(Robot &, location_set_t &, int max_step_to_target = 20);
         int run(void);
 };
