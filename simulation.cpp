@@ -1,12 +1,8 @@
-#include "simulation.h"
-
-class Simulation {
-    
-};
+#include "simulator.h"
 
 int main() {
-    cout << "hello world" << endl;
-    Location loc(1,2);
+    Simulator sim;
+    sim.run();
 
     return 0;
 }

@@ -8,6 +8,10 @@ bool Robot::is_job_done(void) {
     return true;
 }
 
+command_t Robot::process_generating_command(void) {
+    return GO_NORTH;
+}
+
 void Robot::execute_command(command_t cmd) {
     switch (cmd) {
     case GO_NORTH:
@@ -19,4 +23,8 @@ void Robot::execute_command(command_t cmd) {
     case GO_WEST:
         break;
     };
+}
+
+int Robot::measure_error(void) {
+    return 0;
 }
