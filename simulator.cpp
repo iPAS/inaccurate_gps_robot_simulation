@@ -9,16 +9,16 @@ Simulator::Simulator(Robot & robot, location_set_t & target_location_set, int ma
 int Simulator::run(void) {
     this->robot->report();
     do {
-        cout << "---" << endl;
+        cout << "----------" << endl;
         this->robot->set_target(this->targets.front());
         this->targets.pop();
         
-        for (int step = this->max_step_to_target; step > 0; step--) {
+        for (int i = 1; i <= this->max_step_to_target; i++) {
             if (this->robot->operate() == true) {
-                this->robot->report();
+                this->robot->report(i);
                 break;
             }
-            this->robot->report();
+            this->robot->report(i);
         }
     } while (this->targets.size() > 0);
 

@@ -33,5 +33,5 @@ class Robot {
         void set_target(const Location &);
         
         bool operate(void);
-        void report(void);
+        void report(int no = 0);
 };

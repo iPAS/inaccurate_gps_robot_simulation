@@ -68,14 +68,16 @@ bool Robot::operate(void) {
     return (this->measure_error() < this->max_accepted_err)? true : false;
 }
 
-void Robot::report(void) {
+void Robot::report(int no) {
+    if (no != 0)
+        printf("#%d ", no);
     printf("Target:%s ", (char *)this->target);
-    printf("Loc:%s ", (char *)this->location);
+    printf("GPS:%s ", (char *)this->location);
     printf("Err:%.2f ", this->measure_error());
 
     const char * cmd_in_str[] = {
         "N", "E", "S", "W", "_"
     };
-    printf("LstCmd:%s ", cmd_in_str[this->latest_cmd]);
-    printf("LstParam:%d \n", this->latest_param);
+    printf("Walk:%s,%d ", cmd_in_str[this->latest_cmd], this->latest_param);
+    printf("\n\n");
 }
