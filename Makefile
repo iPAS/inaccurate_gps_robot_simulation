@@ -27,6 +27,7 @@ $(TARGET): $(DEPENDS)
 all: $(TARGET)
 
 run: all
+	@echo '--- Start the Simulation ---'
 	@./$(TARGET)
 
 clean:

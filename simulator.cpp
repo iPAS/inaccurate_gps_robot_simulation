@@ -5,16 +5,19 @@ Simulator::Simulator(Robot & robot, location_set_t & target_location_set) {
     this->targets = target_location_set;
 }
 
-void Simulator::run(void) {
-    while (this-robot->is_job_done() == false) {
+int Simulator::run(void) {
+    while (true) {
         if (this->robot->measure_error() < MINIMUM_ACCEPTANCE) {
-            this->robot->next_target();
-            // TODO: print milestone
+            if (this->targets.size() == 0)
+                break;
+
+            this->robot->set_target(this->targets.front());
+            this->targets.pop();
         }
         command_t cmd = this->robot->generate_command();
-        // TODO: print cmd here
         this->robot->execute_command(cmd);
-        // TODO: print current location
+        this->robot->report();
     }
-    // TODO: print job done
+
+    return 0;  // Success
 }

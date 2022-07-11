@@ -4,10 +4,6 @@ Robot::Robot(Location &init_loc, int step_size) : gps(init_loc) {
     this->step_size = step_size;
 }
 
-bool Robot::is_job_done(void) {
-    return true;
-}
-
 command_t Robot::generate_command(void) {
     return GO_NORTH;
 }
@@ -26,9 +22,13 @@ void Robot::execute_command(command_t cmd) {
 }
 
 float Robot::measure_error(void) {
-    return 0;
+    return 0.;
 }
 
-void Robot::next_target(void) {
+void Robot::set_target(const Location & target) {
+    this->target = target;
+}
 
+void Robot::report(void) {
+    printf("Target:(%d, %d)\n", this->target.get_x(), this->target.get_y());
 }

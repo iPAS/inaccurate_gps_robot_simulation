@@ -4,7 +4,10 @@
 #include "robot.h"
 
 #include <iostream>
+#include <queue>
 using namespace std;
+
+typedef queue<Location> location_set_t;
 
 #define MINIMUM_ACCEPTANCE 3.
 
@@ -15,5 +18,5 @@ class Simulator {
 
     public:
         Simulator(Robot &, location_set_t &);
-        void run(void);    
+        int run(void);
 };
