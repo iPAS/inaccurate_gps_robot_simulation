@@ -6,10 +6,11 @@
 using namespace std;
 
 typedef enum {
-    GO_NORTH,
+    GO_NORTH = 0,
     GO_EAST,
     GO_SOUTH,
-    GO_WEST
+    GO_WEST,
+    NONE
 } command_t;
 
 class Robot {
@@ -18,6 +19,7 @@ class Robot {
         Location target;
         Location location;
         float max_accepted_err;
+        command_t latest_cmd;
 
     public:
         GPS gps;

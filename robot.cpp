@@ -5,6 +5,7 @@ Robot::Robot(Location &init_loc, int max_step_size, float max_err) : gps(init_lo
     this->max_step_size = max_step_size;
     this->location = init_loc;
     this->max_accepted_err = max_err;
+    this->latest_cmd = NONE;
 }
 
 void Robot::set_target(const Location & target) {
@@ -38,24 +39,27 @@ command_t Robot::generate_command(int & param) {
 void Robot::execute_command(command_t cmd, int param = 1) {
     // Moving
     switch (cmd) {  
-    case GO_NORTH:
-        this->gps.set_location_relatively(Location(0, param));
-        break;
-    case GO_EAST:
-        this->gps.set_location_relatively(Location(param, 0));
-        break;
-    case GO_SOUTH:
-        this->gps.set_location_relatively(Location(0, -param));
-        break;
-    case GO_WEST:
-        this->gps.set_location_relatively(Location(-param, 0));
-        break;
+        case GO_NORTH:
+            this->gps.set_location_relatively(Location(0, param));
+            break;
+        case GO_EAST:
+            this->gps.set_location_relatively(Location(param, 0));
+            break;
+        case GO_SOUTH:
+            this->gps.set_location_relatively(Location(0, -param));
+            break;
+        case GO_WEST:
+            this->gps.set_location_relatively(Location(-param, 0));
+            break;
+        default:
+            break;
     };
 }
 
 bool Robot::operate(void) {
     int param;
     command_t cmd = this->generate_command(param);
+    this->latest_cmd = cmd;
     this->execute_command(cmd, param);
 
     return (this->measure_error() < this->max_accepted_err)? true : false;
@@ -64,5 +68,10 @@ bool Robot::operate(void) {
 void Robot::report(void) {
     printf("Target:(%d, %d) ", this->target.get_x(), this->target.get_y());
     printf("Loc:(%d, %d) ", this->location.get_x(), this->location.get_y());
-    printf("Err:%f\n", this->measure_error());
+    printf("Err:%f ", this->measure_error());
+
+    const char * cmd_in_str[] = {
+        "N", "E", "S", "W", "_"
+    };
+    printf("LstCmd:%s\n", cmd_in_str[this->latest_cmd]);
 }
