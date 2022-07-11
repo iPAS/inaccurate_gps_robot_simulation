@@ -11,12 +11,10 @@ int Simulator::run(void) {
         this->robot->set_target(this->targets.front());
         this->targets.pop();
 
-        int rc;
         int step = this->max_step_to_target;
         for (; step > 0; step--) {
             this->robot->report();
-            rc = this->robot->operate();        
-            if (rc == 0)
+            if (this->robot->operate() == true)
                 break;
         }
     } while (this->targets.size() > 0);

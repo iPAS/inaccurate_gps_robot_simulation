@@ -14,7 +14,7 @@ typedef enum {
 
 class Robot {
     private:
-        int step_size;
+        int max_step_size;
         Location target;
         Location location;
         float max_accepted_err;
@@ -22,13 +22,13 @@ class Robot {
     public:
         GPS gps;
 
-        Robot(Location &, int stop_size = 1, float max_err = 10.);
+        Robot(Location &, int max_step_size = 5, float max_err = 10.);
 
-        command_t generate_command(void);
-        void execute_command(command_t);
+        command_t generate_command(int & param);
+        void execute_command(command_t, int);
         float measure_error(void);
         void set_target(const Location &);
         
-        int operate(void);
+        bool operate(void);
         void report(void);
 };

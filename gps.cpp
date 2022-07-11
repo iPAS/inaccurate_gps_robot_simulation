@@ -19,7 +19,7 @@ Location & GPS::get_location() {
     return this->location;
 }
 
-Location & GPS::set_location_relatively(Location & loc) {
+Location & GPS::set_location_relatively(const Location & loc) {
     return this->location += loc;
 }
 

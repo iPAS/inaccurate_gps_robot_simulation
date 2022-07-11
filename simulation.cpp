@@ -1,13 +1,13 @@
 #include "simulator.h"
 
 int main() {
-    const int STEP_SIZE = 1;
     const float MAX_ERR = 10.;
+    const int MAX_STEP_SIZE = 1;
     const int MAX_STEP_TO_TARGET = 20;
 
     // Setup location of the robot
     Location start_loc(0, 0);
-    Robot robot(start_loc, STEP_SIZE, MAX_ERR);
+    Robot robot(start_loc, MAX_STEP_SIZE, MAX_ERR);
     robot.gps.set_disturbance(10, 10);  // Inaccuracy of the GPS
 
     // Setup the destination points
