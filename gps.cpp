@@ -1,5 +1,9 @@
 #include "gps.h"
 
+GPS::GPS() : disturbance(0, 0) {
+    this->location = Location(0, 0);
+}
+
 GPS::GPS(Location & loc) : disturbance(0, 0) {
     this->location = loc;
 }

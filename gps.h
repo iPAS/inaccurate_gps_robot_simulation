@@ -13,6 +13,7 @@ class GPS {
         int random_range(int);
 
     public:
+        GPS();
         GPS(Location &);
 
         Location & get_location(void);

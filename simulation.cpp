@@ -4,6 +4,7 @@ int main() {
     // Setup location of the robot
     Location start_loc(0, 0);
     Robot robot(start_loc);
+    robot.gps.set_disturbance(10, 10);  // Inaccuracy of the GPS
 
     // Setup the destination points
     location_set_t target_location_set;

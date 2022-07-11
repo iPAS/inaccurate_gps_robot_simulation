@@ -14,11 +14,13 @@ typedef enum {
 
 class Robot {
     private:
-        GPS gps;
         int step_size;
         Location target;
+        Location location;
 
     public:
+        GPS gps;
+
         Robot(Location &, int stop_size = 1);
 
         command_t generate_command(void);
