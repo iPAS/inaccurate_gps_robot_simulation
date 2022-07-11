@@ -11,6 +11,7 @@ Robot::Robot(Location &init_loc, int max_step_size, float max_err) : gps(init_lo
 
 void Robot::set_target(const Location & target) {
     this->target = target;
+    cout << "Target:" << this->target << endl; 
 }
 
 inline float Robot::measure_error(void) {
@@ -60,8 +61,10 @@ void Robot::execute_command(command_t cmd, int param = 1) {
 bool Robot::operate(void) {
     int param;
     command_t cmd = this->generate_command(param);
+
     this->latest_cmd = cmd;
     this->latest_param = param;
+
     this->execute_command(cmd, param);
 
     return (this->measure_error() < this->max_accepted_err)? true : false;

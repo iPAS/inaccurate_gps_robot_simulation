@@ -12,16 +12,17 @@ inline int GPS::random_range(int range) {
     return (range == 0)? 0 : (rand() % (range * 2)) - range;
 }
 
-Location & GPS::get_location() {
+const Location & GPS::get_location() {
     Location drift(this->random_range( this->disturbance.get_x() ), 
                    this->random_range( this->disturbance.get_y() ));
-    cout << "Drift:" << (char *)drift << endl;
+    cout << "Drift:" << drift << endl;
     this->location += drift;
+    cout << "Loc:" << this->location << endl;
     return this->location;
 }
 
-Location & GPS::set_location_relatively(const Location & loc) {
-    cout << "Go:" << (char *)((Location)loc) << endl;
+const Location & GPS::set_location_relatively(const Location & loc) {
+    cout << "Go:" << (Location)loc << endl;
     return this->location += loc;
 }
 

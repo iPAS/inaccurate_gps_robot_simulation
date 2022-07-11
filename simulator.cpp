@@ -7,12 +7,13 @@ Simulator::Simulator(Robot & robot, location_set_t & target_location_set, int ma
 }
 
 int Simulator::run(void) {
+    this->robot->report();
+    cout << "---" << endl;
     do {
         this->robot->set_target(this->targets.front());
         this->targets.pop();
-
-        int step = this->max_step_to_target;
-        for (; step > 0; step--) {
+        
+        for (int step = this->max_step_to_target; step > 0; step--) {
             if (this->robot->operate() == true) {
                 this->robot->report();
                 break;
