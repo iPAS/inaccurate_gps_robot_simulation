@@ -13,9 +13,11 @@ int Simulator::run(void) {
 
         int step = this->max_step_to_target;
         for (; step > 0; step--) {
-            this->robot->report();
-            if (this->robot->operate() == true)
+            if (this->robot->operate() == true) {
+                this->robot->report();
                 break;
+            }
+            this->robot->report();
         }
     } while (this->targets.size() > 0);
 

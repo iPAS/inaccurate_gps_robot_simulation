@@ -15,6 +15,7 @@ class Location {
         Location & operator = (const Location &);
         Location & operator += (const Location &);
         bool operator == (const Location &);
+        operator char *(void); 
 
         int get_x(void) { return this->x; };
         int get_y(void) { return this->y; };

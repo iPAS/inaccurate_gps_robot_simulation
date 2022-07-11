@@ -20,3 +20,9 @@ Location & Location::operator += (const Location & loc) {
 bool Location::operator == (const Location & loc) {
     return (this->x == loc.x && this->y == loc.y)? true : false;
 }
+
+Location::operator char *(void) {
+    static char str[20];
+    snprintf(str, sizeof str, "(%d, %d)", x, y);
+    return str;
+}

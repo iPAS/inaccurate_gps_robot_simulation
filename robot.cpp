@@ -6,6 +6,7 @@ Robot::Robot(Location &init_loc, int max_step_size, float max_err) : gps(init_lo
     this->location = init_loc;
     this->max_accepted_err = max_err;
     this->latest_cmd = NONE;
+    this->latest_param = 0;
 }
 
 void Robot::set_target(const Location & target) {
@@ -19,7 +20,7 @@ inline float Robot::measure_error(void) {
 }
 
 command_t Robot::generate_command(int & param) {
-    this->location = gps.get_location();
+    this->location = gps.get_location();  // Drift in here
     int err_x = this->target.get_x() - this->location.get_x();
     int err_y = this->target.get_y() - this->location.get_y();
 
@@ -60,18 +61,20 @@ bool Robot::operate(void) {
     int param;
     command_t cmd = this->generate_command(param);
     this->latest_cmd = cmd;
+    this->latest_param = param;
     this->execute_command(cmd, param);
 
     return (this->measure_error() < this->max_accepted_err)? true : false;
 }
 
 void Robot::report(void) {
-    printf("Target:(%d, %d) ", this->target.get_x(), this->target.get_y());
-    printf("Loc:(%d, %d) ", this->location.get_x(), this->location.get_y());
-    printf("Err:%f ", this->measure_error());
+    printf("Target:%s ", (char *)this->target);
+    printf("Loc:%s ", (char *)this->location);
+    printf("Err:%.2f ", this->measure_error());
 
     const char * cmd_in_str[] = {
         "N", "E", "S", "W", "_"
     };
-    printf("LstCmd:%s\n", cmd_in_str[this->latest_cmd]);
+    printf("LstCmd:%s ", cmd_in_str[this->latest_cmd]);
+    printf("LstParam:%d \n", this->latest_param);
 }

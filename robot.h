@@ -20,6 +20,7 @@ class Robot {
         Location location;
         float max_accepted_err;
         command_t latest_cmd;
+        int latest_param;
 
     public:
         GPS gps;
