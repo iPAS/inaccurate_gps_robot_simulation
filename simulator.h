@@ -6,10 +6,14 @@
 #include <iostream>
 using namespace std;
 
-class Simulator {
-    
-    public:
-        Simulator() {};
+#define MINIMUM_ACCEPTANCE 3.
 
+class Simulator {
+    private:
+        Robot *robot;
+        location_set_t targets;
+
+    public:
+        Simulator(Robot &, location_set_t &);
         void run(void);    
 };

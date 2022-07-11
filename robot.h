@@ -14,18 +14,21 @@ typedef enum {
     GO_WEST
 } command_t;
 
+typedef vector<Location> location_set_t;
+
 class Robot {
     private:
         GPS gps;
         int step_size;
 
-        vector<Location> set_points;
+        location_set_t points;
 
     public:
-        Robot(Location &, int);
+        Robot(Location &, int stop_size = 1);
 
         bool is_job_done(void);
-        command_t process_generating_command(void);
+        command_t generate_command(void);
         void execute_command(command_t);
-        int measure_error(void);
+        float measure_error(void);
+        void next_target(void);
 };
