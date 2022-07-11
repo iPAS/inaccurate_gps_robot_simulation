@@ -5,9 +5,13 @@ using namespace std;
 
 class Location {
     private:
-    int x;
-    int y;
+        int x;
+        int y;
 
     public:
-    Location(int x, int y);
+        Location() {};
+        Location(int x, int y);
+
+        Location & operator = (Location &);
+        bool operator == (Location &);
 };
