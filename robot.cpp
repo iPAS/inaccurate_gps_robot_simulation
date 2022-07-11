@@ -61,12 +61,10 @@ void Robot::execute_command(command_t cmd, int param = 1) {
 bool Robot::operate(void) {
     int param;
     command_t cmd = this->generate_command(param);
+    this->execute_command(cmd, param);
 
     this->latest_cmd = cmd;
     this->latest_param = param;
-
-    this->execute_command(cmd, param);
-
     return (this->measure_error() < this->max_accepted_err)? true : false;
 }
 

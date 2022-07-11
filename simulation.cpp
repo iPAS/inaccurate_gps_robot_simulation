@@ -2,7 +2,7 @@
 
 int main() {
     const float MAX_ERR = 10.;
-    const int MAX_STEP_SIZE = 1;
+    const int MAX_STEP_SIZE = 10;
     const int MAX_STEP_TO_TARGET = 20;
 
     // Setup location of the robot
