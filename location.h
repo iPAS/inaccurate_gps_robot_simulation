@@ -10,8 +10,12 @@ class Location {
 
     public:
         Location() {};
-        Location(int x, int y);
+        Location(int, int);
 
         Location & operator = (Location &);
+        Location & operator += (Location &);
         bool operator == (Location &);
+
+        int get_x(void) { return this->x; };
+        int get_y(void) { return this->y; };
 };

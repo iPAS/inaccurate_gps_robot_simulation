@@ -20,5 +20,5 @@ class Robot {
     public:
         Robot(Location &, int);
 
-        void do_command(command_t);
+        void execute_command(command_t);
 };
