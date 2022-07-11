@@ -6,18 +6,19 @@ Simulator::Simulator(Robot & robot, location_set_t & target_location_set) {
 }
 
 int Simulator::run(void) {
-    while (true) {
-        if (this->robot->measure_error() < MINIMUM_ACCEPTANCE) {
-            if (this->targets.size() == 0)
-                break;
+    int max_step = 10;
+    do {
+        this->robot->set_target(this->targets.front());
+        this->targets.pop();
 
-            this->robot->set_target(this->targets.front());
-            this->targets.pop();
+        int rc;
+        for (; max_step > 0; max_step--) {
+            this->robot->report();
+            rc = this->robot->operate();        
+            if (rc == 0)
+                break;
         }
-        command_t cmd = this->robot->generate_command();
-        this->robot->execute_command(cmd);
-        this->robot->report();
-    }
+    } while (this->targets.size() > 0);
 
     return 0;  // Success
 }

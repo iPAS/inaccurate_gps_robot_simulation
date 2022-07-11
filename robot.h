@@ -27,6 +27,7 @@ class Robot {
         void execute_command(command_t);
         float measure_error(void);
         void set_target(const Location &);
-
+        
+        int operate(void);
         void report(void);
 };
