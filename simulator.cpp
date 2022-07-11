@@ -11,6 +11,7 @@ int Simulator::run(void) {
     do {
         cout << "----------" << endl;
         this->robot->set_target(this->targets.front());
+        cout << endl;
         this->targets.pop();
         
         for (int i = 1; i <= this->max_step_to_target; i++) {

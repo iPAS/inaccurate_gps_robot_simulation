@@ -11,7 +11,7 @@ Robot::Robot(Location &init_loc, int max_step_size, float max_err) : gps(init_lo
 
 void Robot::set_target(const Location & target) {
     this->target = target;
-    cout << "Target:" << this->target << endl; 
+    cout << "Target:" << this->target << endl;
 }
 
 inline float Robot::measure_error(void) {
