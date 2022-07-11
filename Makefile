@@ -20,13 +20,14 @@ CFLAGS = -g -Wall
 	${CC} $(CFLAGS) -c $<
 
 # Make the target
-$(TARGET): $(DEPENDS) $(HEADERS)
+$(TARGET): $(DEPENDS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(DEPENDS)
 
 # ----------------
-all: $(TARGET)
+all: Makefile $(TARGET)
 
-run: all
+run:
+	@make all
 	@echo '--- Start the Simulation ---'
 	@./$(TARGET)
 

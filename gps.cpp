@@ -17,12 +17,12 @@ const Location & GPS::get_location() {
                    this->random_range( this->disturbance.get_y() ));
     cout << "Drift:" << drift << endl;
     this->location += drift;
-    cout << "Loc:" << this->location << endl;
+    // cout << "Loc:" << this->location << endl;  // XXX:
     return this->location;
 }
 
 const Location & GPS::set_location_relatively(const Location & loc) {
-    cout << "Go:" << (Location)loc << endl;
+    cout << "Walk:" << (Location)loc << endl;
     return this->location += loc;
 }
 

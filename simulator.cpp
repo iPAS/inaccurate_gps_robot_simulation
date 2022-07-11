@@ -8,8 +8,8 @@ Simulator::Simulator(Robot & robot, location_set_t & target_location_set, int ma
 
 int Simulator::run(void) {
     this->robot->report();
-    cout << "---" << endl;
     do {
+        cout << "---" << endl;
         this->robot->set_target(this->targets.front());
         this->targets.pop();
         
