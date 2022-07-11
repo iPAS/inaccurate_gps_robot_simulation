@@ -3,6 +3,8 @@
 #include "gps.h"
 
 #include <iostream>
+#include <vector>
+
 using namespace std;
 
 typedef enum {
@@ -17,8 +19,11 @@ class Robot {
         GPS gps;
         int step_size;
 
+        vector<Location> set_points;
+
     public:
         Robot(Location &, int);
 
+        bool is_job_done(void);
         void execute_command(command_t);
 };

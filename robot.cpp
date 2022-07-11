@@ -4,6 +4,10 @@ Robot::Robot(Location &init_loc, int step_size = 1) : gps(init_loc) {
     this->step_size = step_size;
 }
 
+bool Robot::is_job_done(void) {
+    return true;
+}
+
 void Robot::execute_command(command_t cmd) {
     switch (cmd) {
     case GO_NORTH:
