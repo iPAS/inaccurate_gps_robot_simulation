@@ -20,7 +20,7 @@ CFLAGS = -g -Wall
 	${CC} $(CFLAGS) -c $<
 
 # Make the target
-$(TARGET): $(DEPENDS)
+$(TARGET): $(DEPENDS) $(HEADERS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(DEPENDS)
 
 # ----------------
