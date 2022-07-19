@@ -33,3 +33,10 @@ run:
 
 clean:
 	rm -rf $(TARGET) *.s *.o *.dSYM
+
+
+.PHONY: play
+
+patsubst_out = $(patsubst %.cpp, %.test, $(SRCS))
+play:
+	@echo $(patsubst_out)
