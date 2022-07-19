@@ -33,14 +33,18 @@ PATH_RESULT = $(PATH_BUILD)results/
 
 BUILD_PATH_SRC = $(PATH_BUILD) $(PATH_DEP) $(PATH_OBJ) $(PATH_RESULT)
 
-SRCT = $(wildcard $(PATH_TEST)*.c)
+SRCS := $(wildcard $(PATH_SRC)*.cpp)
+HEADERS := $(wildcard $(PATH_SRC)*.h)
+DEPENDS := $(patsubst $(PATH_SRC)%.cpp, $(PATH_OBJ)%.o, $(SRCS))
+
+SRCT = $(wildcard $(PATH_TEST)*.cpp)
 
 COMPILE=gcc -c
 LINK=gcc
 DEPEND=gcc -MM -MG -MF
 CFLAGS=-I. -I$(PATH_UNITY) -I$(PATH_SRC) -DTEST
 
-RESULTS = $(patsubst $(PATH_TEST)Test%.c, $(PATH_RESULT)Test%.txt, $(SRCT))
+RESULTS = $(patsubst $(PATH_TEST)test_%.cpp, $(PATH_RESULT)test_%.txt, $(SRCT))
 
 PASSED = `grep -s PASS $(PATH_RESULT)*.txt`
 FAIL = `grep -s FAIL $(PATH_RESULT)*.txt`
@@ -51,7 +55,12 @@ IGNORE = `grep -s IGNORE $(PATH_RESULT)*.txt`
 ## Targets
 ##
 all:
-	@echo "all"
+	@echo $(SRCT)
+	@echo $(SRCS)
+	@echo $(HEADERS)
+	@echo $(DEPENDS)
+	@echo $(RESULTS)
+
 
 test: $(BUILD_PATH_SRC) $(RESULTS)
 	@echo "-----------------------\nIGNORES:\n-----------------------"
@@ -65,20 +74,21 @@ test: $(BUILD_PATH_SRC) $(RESULTS)
 $(PATH_RESULT)%.txt: $(PATH_BUILD)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
 
-$(PATH_BUILD)Test%.$(TARGET_EXTENSION): $(PATH_OBJ)Test%.o $(PATH_OBJ)%.o $(PATH_OBJ)unity.o #$(PATH_DEP)Test%.d
+$(PATH_BUILD)test_%.$(TARGET_EXTENSION): $(PATH_OBJ)test_%.o $(PATH_OBJ)%.o $(PATH_OBJ)unity.o $(PATH_DEP)test_%.d
 	$(LINK) -o $@ $^
 
-$(PATH_OBJ)%.o:: $(PATH_TEST)%.c
+$(PATH_OBJ)%.o:: $(PATH_TEST)%.cpp
 	$(COMPILE) $(CFLAGS) $< -o $@
 
-$(PATH_OBJ)%.o:: $(PATH_SRC)%.c
+$(PATH_OBJ)%.o:: $(PATH_SRC)%.cpp
 	$(COMPILE) $(CFLAGS) $< -o $@
 
 $(PATH_OBJ)%.o:: $(PATH_UNITY)%.c $(PATH_UNITY)%.h
 	$(COMPILE) $(CFLAGS) $< -o $@
 
-$(PATH_DEP)%.d:: $(PATH_TEST)%.c
+$(PATH_DEP)%.d:: $(PATH_TEST)%.cpp
 	$(DEPEND) $@ $<
+
 
 $(PATH_BUILD):
 	$(MKDIR) $(PATH_BUILD)
@@ -92,6 +102,7 @@ $(PATH_OBJ):
 $(PATH_RESULT):
 	$(MKDIR) $(PATH_RESULT)
 
+
 clean:
 	$(CLEANUP) $(PATH_OBJ)*.o
 	$(CLEANUP) $(PATH_BUILD)*.$(TARGET_EXTENSION)
@@ -99,7 +110,7 @@ clean:
 
 ## .PRECIOUS: Preserving Libraries Against Removal due to Interrupts
 ## https://docs.oracle.com/cd/E19504-01/802-5880/make-49/index.html
-.PRECIOUS: $(PATH_BUILD)Test%.$(TARGET_EXTENSION)
+.PRECIOUS: $(PATH_BUILD)test_%.$(TARGET_EXTENSION)
 .PRECIOUS: $(PATH_DEP)%.d
 .PRECIOUS: $(PATH_OBJ)%.o
 .PRECIOUS: $(PATH_RESULT)%.txt
