@@ -1,5 +1,8 @@
 ## Original from http://www.throwtheswitch.org/build/make
 
+## Please beware of calling "C" from "C++"
+# https://stackoverflow.com/questions/2744181/how-to-call-c-function-from-c
+
 ## https://stackoverflow.com/questions/3477292/what-do-and-do-as-prefixes-to-recipe-lines-in-make
 # @ suppresses the normal 'echo' of the command that is executed.
 # - means ignore the exit status of the command that is executed (normally, a non-zero exit status would stop that part of the build).

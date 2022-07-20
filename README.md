@@ -13,6 +13,11 @@ The robot will walk to the target point-by-point until no destination left.
 * `make run`
 
 
+## Unittest
+
+* `make test`
+
+
 ## Output Example
 
 ```bash
@@ -133,3 +138,8 @@ Target:(20, -10)
 >> GPS Drift:(7, -2)
 #12 Target:(20, -10) GPS:(27, -10) Err:7.00 Walk:W,7 
 ```
+
+
+## Note
+
+* https://stackoverflow.com/questions/2744181/how-to-call-c-function-from-c
