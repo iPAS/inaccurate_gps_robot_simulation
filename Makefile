@@ -31,7 +31,6 @@ endif
 ##
 ## Variables setup
 ##
-.PHONY: all run clean test show_var
 
 # the compiler: gcc for C program, define as g++ for C++
 CC = clang++
@@ -66,45 +65,15 @@ PASSED = `grep -s PASS $(PATH_RESULT)*.txt`
 FAIL = `grep -s FAIL $(PATH_RESULT)*.txt`
 IGNORE = `grep -s IGNORE $(PATH_RESULT)*.txt`
 
-# https://stackoverflow.com/questions/2057689/how-does-make-app-know-default-target-to-build-if-no-target-is-specified
-.DEFAULT_GOAL := all
-
-show_var:
-	@echo $(SRCT)
-	@echo $(SRCS)
-	@echo $(HEADERS)
-	@echo $(DEPENDS)
-	@echo $(RESULTS)
-
 
 ##
 ## Targets
 ##
-all: Makefile $(BUILD_PATH_SRC) $(TARGET)
 
-$(TARGET): $(DEPENDS)
-	$(CC) -o $@ $^
+# https://stackoverflow.com/questions/2057689/how-does-make-app-know-default-target-to-build-if-no-target-is-specified
+.DEFAULT_GOAL := all
+.PHONY: all run clean test show_var
 
-run:
-	@make all
-	@echo '--- Start the Simulation ---'
-	-$(TARGET)
-
-
-test: $(BUILD_PATH_SRC) $(RESULTS)
-	@echo "-----------------------\nIGNORES:\n-----------------------"
-	@echo "$(IGNORE)"
-	@echo "-----------------------\nFAILURES:\n-----------------------"
-	@echo "$(FAIL)"
-	@echo "-----------------------\nPASSED:\n-----------------------"
-	@echo "$(PASSED)"
-	@echo "\nDONE"
-
-$(PATH_RESULT)%.txt: $(PATH_BUILD)%.$(TARGET_EXTENSION)
-	-./$< > $@ 2>&1
-
-$(PATH_BUILD)test_%.$(TARGET_EXTENSION): $(PATH_OBJ)test_%.o $(PATH_OBJ)%.o $(PATH_OBJ)unity.o #$(PATH_DEP)test_%.d
-	$(CC) -o $@ $^
 
 ## The double colon tells Make that this rule is terminating. 
 ## Therefore, if it can't find a C file associated with one of these rules, 
@@ -135,15 +104,48 @@ $(PATH_RESULT):
 	$(MKDIR) $(PATH_RESULT)
 
 
+$(PATH_RESULT)test_%.txt: $(PATH_BUILD)test_%.$(TARGET_EXTENSION)
+	-./$< > $@ 2>&1
+
+$(PATH_BUILD)test_%.$(TARGET_EXTENSION): $(PATH_OBJ)test_%.o $(PATH_OBJ)%.o $(PATH_OBJ)unity.o #$(PATH_DEP)test_%.d
+	$(CC) -o $@ $^
+
+
+$(TARGET): $(DEPENDS)
+	$(CC) -o $@ $^
+
+all: Makefile $(BUILD_PATH_SRC) $(TARGET)
+
+run:
+	@make all
+	@echo '--- Start the Simulation ---'
+	-$(TARGET)
+
+test: $(BUILD_PATH_SRC) $(RESULTS)
+	@echo "-----------------------\nIGNORES:\n-----------------------"
+	@echo "$(IGNORE)"
+	@echo "-----------------------\nFAILURES:\n-----------------------"
+	@echo "$(FAIL)"
+	@echo "-----------------------\nPASSED:\n-----------------------"
+	@echo "$(PASSED)"
+	@echo "\nDONE"
+
 clean:
 	$(CLEANUP) -r $(PATH_BUILD)
 # $(CLEANUP) $(PATH_OBJ)*.o
 # $(CLEANUP) $(PATH_BUILD)*.$(TARGET_EXTENSION)
 # $(CLEANUP) $(PATH_RESULT)*.txt
 
+show_var:
+	@echo $(SRCS)
+	@echo $(HEADERS)
+	@echo $(DEPENDS)
+	@echo $(SRCT)
+	@echo $(RESULTS)
+
 ## .PRECIOUS: Preserving Libraries Against Removal due to Interrupts
 ## https://docs.oracle.com/cd/E19504-01/802-5880/make-49/index.html
 .PRECIOUS: $(PATH_BUILD)test_%.$(TARGET_EXTENSION)
 .PRECIOUS: $(PATH_DEP)%.d
 .PRECIOUS: $(PATH_OBJ)%.o
-.PRECIOUS: $(PATH_RESULT)%.txt
+.PRECIOUS: $(PATH_RESULT)test_%.txt

@@ -13,9 +13,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+          submodules: recursive
+
+    - name: version
+      run: make --version
+
+    - name: show_var
+      run: make show_var
 
     - name: build
       run: make
+
+    - name: test debug
+      run: make test --debug
 
     - name: test
       run: make test
