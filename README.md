@@ -143,3 +143,5 @@ Target:(20, -10)
 ## Note
 
 * https://stackoverflow.com/questions/2744181/how-to-call-c-function-from-c
+* Next step after the development of unit-testing success:
+    * http://www.throwtheswitch.org/cmock
