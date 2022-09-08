@@ -25,8 +25,6 @@ void test_operator_type_casting(void) {
 void test_operator_equal(void) {
     Location l1(0, 0);
     Location l2(0, 1);
-    string str;
-    
     TEST_ASSERT_TRUE(*pLoc == l1);
     TEST_ASSERT_FALSE(*pLoc == l2);
 }

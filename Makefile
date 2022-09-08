@@ -34,7 +34,7 @@ endif
 
 # the compiler: gcc for C program, define as g++ for C++
 CC = clang++
-# CC = gcc
+# CC = g++
 # compiler flags:
 #  -g     - this flag adds debugging information to the executable file
 #  -Wall  - this flag is used to turn on most compiler warnings
@@ -105,7 +105,7 @@ $(PATH_RESULT):
 
 
 $(PATH_RESULT)test_%.txt: $(PATH_BUILD)test_%.$(TARGET_EXTENSION)
-	-./$< > $@ 2>&1
+	-./$< >$@ 2>&1
 
 $(PATH_BUILD)test_%.$(TARGET_EXTENSION): $(PATH_OBJ)test_%.o $(PATH_OBJ)%.o $(PATH_OBJ)unity.o #$(PATH_DEP)test_%.d
 	$(CC) -o $@ $^
